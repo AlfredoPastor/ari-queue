@@ -2,15 +2,11 @@ FROM golang:1.14.0-stretch as builder
 
 ENV GOPROXY https://proxy.golang.org
 
-ADD go.* ./
-
+WORKDIR /go/src/github.com/AlfredoPastor/ari-queue
+COPY . .
 RUN go mod download
 
-WORKDIR /go/src/github.com/AlfredoPastor/ari-queue
-
-COPY . .
-
-RUN CGO_ENABLED=0 GOOS=linux go build -o /go/bin/AlfredoPastor/ari-queue/cmd/main.go
+RUN CGO_ENABLED=0 go build -o /go/bin/binary cmd/main.go
 
 ## ----------------------------
 FROM scratch
@@ -19,5 +15,5 @@ FROM scratch
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 # copy bin
-COPY --from=builder /binary /ari-queue
+COPY --from=builder /go/bin/binary /ari-queue
 CMD ["/ari-queue"]
