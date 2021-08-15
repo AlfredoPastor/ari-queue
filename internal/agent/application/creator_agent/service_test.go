@@ -3,6 +3,7 @@ package creator_agent
 import (
 	"ari-queue/internal/agent/domain"
 	"ari-queue/internal/agent/infraestructure/mocks"
+	"ari-queue/internal/shared/uniqueids/domain/tools"
 	"context"
 	"errors"
 	"testing"
@@ -27,7 +28,7 @@ func Test_Creator_Agent_OK(t *testing.T) {
 }
 
 func Test_Creator_Agent_Save_Fail(t *testing.T) {
-	id, idPhone, name, state, statePhone := "5efbbb993a65a00001ad8ffd", "5efbbb993a65a00001ad8ffd", "Alfredo", "UNAVAILABLE", "UNAVAILABLE"
+	id, idPhone, name, state, statePhone := tools.NewUuid(), tools.NewUuid(), "Alfredo", "UNAVAILABLE", "UNAVAILABLE"
 	code, phoneNumber := 12, 301
 	phone, err := domain.NewPhone(idPhone, phoneNumber, statePhone)
 	require.NoError(t, err)
@@ -41,7 +42,7 @@ func Test_Creator_Agent_Save_Fail(t *testing.T) {
 }
 
 func Test_Creator_Agent_ID_Fail(t *testing.T) {
-	id, idPhone, name, state, statePhone := "5efbbb993a65a00", "5efbbb993a65a00001ad8ffd", "Alfredo", "UNAVAILABLE", "UNAVAILABLE"
+	id, idPhone, name, state, statePhone := "5efbbb993a65a00", tools.NewUuid(), "Alfredo", "UNAVAILABLE", "UNAVAILABLE"
 	code, phoneNumber := 12, 301
 	phone, err := domain.NewPhone(idPhone, phoneNumber, statePhone)
 	require.NoError(t, err)
