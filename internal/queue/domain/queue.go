@@ -23,14 +23,14 @@ type Queue struct {
 	Musicclass          string
 }
 
-func (q Queue) AddAgent(id uuid.VoId) {
-	q.Lock()
-	defer q.Unlock()
-	q.Agents = append(q.Agents, id)
-}
+// func (q Queue) AddAgent(id uuid.VoId) {
+// 	q.Lock()
+// 	defer q.Unlock()
+// 	q.Agents = append(q.Agents, id)
+// }
 
-func (q Queue) AddCustomer(id uuid.VoId) {
-	q.Lock()
-	defer q.Unlock()
-	q.Customers = append(q.Customers, id)
-}
+// func (q Queue) AddCustomer(id uuid.VoId) {
+// 	q.Lock()
+// 	defer q.Unlock()
+// 	q.Customers = append(q.Customers, id)
+// }

@@ -9,9 +9,12 @@ type CreatorAgentService struct {
 	domain.AgentRepository
 }
 
-func (c CreatorAgentService) Create(ctx context.Context, id string, code, phoneNumber int, name string) error {
-	agent := domain.NewAgent(id, code, phoneNumber, name)
-	err := c.AgentRepository.Save(ctx, agent)
+func (c CreatorAgentService) Create(ctx context.Context, id string, code int, name, state string, phone domain.Phone) error {
+	agent, err := domain.NewAgent(id, code, name, state, phone)
+	if err != nil {
+		return err
+	}
+	err = c.AgentRepository.Save(ctx, agent)
 	if err != nil {
 		return err
 	}
