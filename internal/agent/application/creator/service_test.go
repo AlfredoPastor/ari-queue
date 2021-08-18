@@ -1,4 +1,4 @@
-package creator_agent
+package creator
 
 import (
 	"ari-queue/internal/agent/domain"

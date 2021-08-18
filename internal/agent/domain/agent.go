@@ -5,8 +5,12 @@ import (
 	"context"
 )
 
+//go:generate mockery --outpkg=mocks --output=../../infraestructure/mocks --name=AgentRepository
 type AgentRepository interface {
+	GetPassword(ctx context.Context, phoneNumber int) (int, error)
+	SearchByCodeAndPassword(ctx context.Context, agentCode int, password int) (Agent, error)
 	Save(context.Context, Agent) error
+	Update(context.Context, Agent) error
 	Delete(context.Context, uuid.VoId) error
 }
 type Agent struct {
@@ -30,4 +34,8 @@ func NewAgent(id string, code int, name, state string, phone Phone) (Agent, erro
 		State: stateVo,
 		Phone: phone,
 	}, nil
+}
+
+func (a Agent) Signin() {
+	a.State = SIGNIN
 }

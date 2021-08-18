@@ -1,4 +1,4 @@
-package application
+package deleter
 
 import (
 	"ari-queue/internal/agent/domain"

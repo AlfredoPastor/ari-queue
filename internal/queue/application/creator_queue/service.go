@@ -1,11 +1,22 @@
 package application
 
-type CreatorQueue struct{}
+import (
+	"ari-queue/internal/queue/domain"
+	"ari-queue/internal/shared/uniqueids/domain/uuid"
+	"context"
+)
 
-func (c CreatorQueue) Create() error {
+type CreatorService struct{}
+
+func (c CreatorService) Create(ctx context.Context, id, name string, agents []uuid.VoId) error {
+	queue, err := domain.NewQueue(ctx, id, name, agents)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
-func NewCreatorQueue() CreatorQueue {
-	return CreatorQueue{}
+func NewCreatorService() CreatorService {
+	return CreatorService{}
 }
