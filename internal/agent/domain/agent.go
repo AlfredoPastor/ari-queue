@@ -9,9 +9,9 @@ import (
 type AgentRepository interface {
 	GetPassword(ctx context.Context, phoneNumber int) (int, error)
 	SearchByCodeAndPassword(ctx context.Context, agentCode int, password int) (Agent, error)
-	Save(context.Context, Agent) error
-	Update(context.Context, Agent) error
+	Upsert(context.Context, Agent) error
 	Delete(context.Context, uuid.VoId) error
+	Search(context.Context, uuid.VoId) (Agent, error)
 }
 type Agent struct {
 	ID    uuid.VoId

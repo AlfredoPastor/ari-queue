@@ -13,6 +13,14 @@ type AgentRepository struct {
 	agents map[uuid.VoId]domain.Agent
 }
 
+func (a *AgentRepository) GetPassword(ctx context.Context, phoneNumber int) (int, error) {
+	return 0, nil
+}
+
+func (a *AgentRepository) SearchByCodeAndPassword(ctx context.Context, agentCode int, password int) (domain.Agent, error) {
+	return domain.Agent{}, nil
+}
+
 func (a *AgentRepository) Upsert(ctx context.Context, agent domain.Agent) error {
 	a.Lock()
 	defer a.Unlock()

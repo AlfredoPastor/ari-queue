@@ -14,7 +14,7 @@ func (c CreatorAgentService) Create(ctx context.Context, id string, code int, na
 	if err != nil {
 		return err
 	}
-	err = c.AgentRepository.Save(ctx, agent)
+	err = c.AgentRepository.Upsert(ctx, agent)
 	if err != nil {
 		return err
 	}

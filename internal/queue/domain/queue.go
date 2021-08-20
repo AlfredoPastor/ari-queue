@@ -6,9 +6,8 @@ import (
 )
 
 type QueueRepository interface {
-	Save(ctx context.Context, q Queue) error
-	Search(ctx context.Context, id uuid.VoId) error
-	Update(ctx context.Context, q Queue) error
+	Search(ctx context.Context, id uuid.VoId) (Queue, error)
+	Upsert(ctx context.Context, q Queue) error
 	Delete(ctx context.Context, id uuid.VoId) error
 }
 
@@ -25,7 +24,7 @@ func NewQueue(id, name string, agents []uuid.VoId) (Queue, error) {
 	if err != nil {
 		return Queue{}, err
 	}
-	agentsVO := []uuid.VoId{}
+	var agentsVO []uuid.VoId
 	agentsVO = append(agentsVO, agents...)
 	return Queue{
 		ID:        idVo,

@@ -20,21 +20,21 @@ func Test_Creator_Agent_OK(t *testing.T) {
 	require.NoError(t, err)
 
 	agentRepositoryMock := new(mocks.AgentRepositoryMock)
-	agentRepositoryMock.On("Save", mock.Anything, mock.AnythingOfType("domain.Agent")).Return(nil)
+	agentRepositoryMock.On("Upsert", mock.Anything, mock.AnythingOfType("domain.Agent")).Return(nil)
 	creatorAgentService := NewCreatorAgentService(agentRepositoryMock)
 	err = creatorAgentService.Create(context.Background(), id, code, name, state, phone)
 	agentRepositoryMock.AssertExpectations(t)
 	assert.NoError(t, err)
 }
 
-func Test_Creator_Agent_Save_Fail(t *testing.T) {
+func Test_Creator_Agent_Upsert_Fail(t *testing.T) {
 	id, idPhone, name, state, statePhone := tools.NewUuid(), tools.NewUuid(), "Alfredo", "UNAVAILABLE", "UNAVAILABLE"
 	code, phoneNumber := 12, 301
 	phone, err := domain.NewPhone(idPhone, phoneNumber, statePhone)
 	require.NoError(t, err)
 
 	agentRepositoryMock := new(mocks.AgentRepositoryMock)
-	agentRepositoryMock.On("Save", mock.Anything, mock.AnythingOfType("domain.Agent")).Return(errors.New("something unexpected happened"))
+	agentRepositoryMock.On("Upsert", mock.Anything, mock.AnythingOfType("domain.Agent")).Return(errors.New("something unexpected happened"))
 	creatorAgentService := NewCreatorAgentService(agentRepositoryMock)
 	err = creatorAgentService.Create(context.Background(), id, code, name, state, phone)
 	agentRepositoryMock.AssertExpectations(t)

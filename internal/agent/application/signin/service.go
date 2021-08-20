@@ -19,7 +19,7 @@ func (s SigninService) Signin(ctx context.Context, agentCode int, phoneNumber in
 		return err
 	}
 	agent.Signin()
-	err = s.AgentRepository.Update(ctx, agent)
+	err = s.AgentRepository.Upsert(ctx, agent)
 	if err != nil {
 		return err
 	}

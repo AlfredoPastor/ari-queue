@@ -27,7 +27,7 @@ func Test_Signin_Ok(t *testing.T) {
 	agentRepositoryMock := new(mocks.AgentRepositoryMock)
 	agentRepositoryMock.On("GetPassword", mock.Anything, mock.AnythingOfType("int")).Return(777, nil)
 	agentRepositoryMock.On("SearchByCodeAndPassword", mock.Anything, mock.AnythingOfType("int"), mock.AnythingOfType("int")).Return(agent, nil)
-	agentRepositoryMock.On("Update", mock.Anything, mock.AnythingOfType("domain.Agent")).Return(nil)
+	agentRepositoryMock.On("Upsert", mock.Anything, mock.AnythingOfType("domain.Agent")).Return(nil)
 	siginService := NewSigninService(agentRepositoryMock)
 	err := siginService.Signin(context.Background(), agentCode, phoneNumber)
 	agentRepositoryMock.AssertExpectations(t)
@@ -57,7 +57,7 @@ func Test_Signin_SearchByCodeAndPassword_Fail(t *testing.T) {
 	assert.Error(t, err)
 }
 
-func Test_Signin_Update_Fail(t *testing.T) {
+func Test_Signin_Upsert_Fail(t *testing.T) {
 	agentCode, phoneNumber := 344, 301
 	agent := domain.Agent{
 		ID:   uuid.VoId(tools.NewUuid()),
@@ -71,7 +71,7 @@ func Test_Signin_Update_Fail(t *testing.T) {
 	agentRepositoryMock := new(mocks.AgentRepositoryMock)
 	agentRepositoryMock.On("GetPassword", mock.Anything, mock.AnythingOfType("int")).Return(777, nil)
 	agentRepositoryMock.On("SearchByCodeAndPassword", mock.Anything, mock.AnythingOfType("int"), mock.AnythingOfType("int")).Return(agent, nil)
-	agentRepositoryMock.On("Update", mock.Anything, mock.AnythingOfType("domain.Agent")).Return(errors.New("upsss"))
+	agentRepositoryMock.On("Upsert", mock.Anything, mock.AnythingOfType("domain.Agent")).Return(errors.New("upsss"))
 	siginService := NewSigninService(agentRepositoryMock)
 	err := siginService.Signin(context.Background(), agentCode, phoneNumber)
 	agentRepositoryMock.AssertExpectations(t)
